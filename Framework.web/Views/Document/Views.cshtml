@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewData["Title"] = "Views";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Views</h1>
+        <br />
+        <p style="text-align:justify;">
+            One of the concerns of <strong>.NET</strong> programmers is
+            working with <strong>SQL Views</strong> so that they can map
+            their results in objects and apply filters on the outputs of the
+            view. The <strong>Entity Framework</strong> recognizes the views
+            as a table, but the <strong>AUA</strong> framework makes it
+            possible to map the view output to the objects and apply a
+            filter to it.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <pre class="prettyprint lang-csh">
+
+                CREATE VIEW [dbo].[UserRolesVw]
+
+                AS
+
+                SELECT AppUser.Id AS userId,AppUser.UserName,Role.Title
+
+                FROM AppUser INNER JOIN UserRole
+
+                ON AppUser.Id = UserRole.AppUserId
+
+                INNER JOIN Role
+
+                ON UserRole.RoleId = Role.Id
+
+                GO
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            For the view output, we write a class that inherits from
+            <strong>BaseView</strong>.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class UserRolesVw : BaseView
+                {
+
+                       public long UserId { get; set; }
+                       public string UserName { get; set; }
+                       public string Title { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            We also make a <strong>View DTO</strong> for the View output (if
+            we want to create a change in the View output, we apply it to
+            the <strong>DTO</strong>).
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class UserRolesVwDto : IMapFrom< UserRolesVw >
+                {
+
+                        public long UserId { get; set; }
+                        public string UserName { get; set; }
+                        public string Title { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            We also create a <strong>service</strong> to work with the view,
+            where filters will be written for the view.
+        </p>
+        <br />
+        <h3>Interface</h3>
+        <br />
+        <pre class="prettyprint lang-csh">
+
+                public interface IUserRolesVwService : IBaseGenericService< UserRolesVw, UserRolesVwDto >
+                {}
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <h3>View Service</h3>
+        <br />
+        <pre class="prettyprint lang-csh">
+
+                public class UserRolesVwService : BaseGenericService< UserRolesVw, UserRolesVwDto >, IUserRolesVwService
+                {
+
+                    public UserRolesVwService(IUnitOfWork unitOfWork) : base(unitOfWork)
+                    {}
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            <strong>Functions</strong> that are added to the
+            <strong>view service</strong> by default are as follows
+        </p>
+        <br />
+        <table style="width:100%">
+            <tr id="header">
+                <th>Function</th>
+                <th>Description</th>
+            </tr>
+
+            <tr>
+                <td>GetAll</td>
+                <td>
+                    This returns all entities and can be filtered. It also
+                    supports Async.
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetAllDto</td>
+                <td>
+                    This returns all entities in DTO format and can be filtered.
+                    It also supports Async.
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetCount</td>
+                <td>Number of entities - can be filtered.</td>
+            </tr>
+
+            <tr>
+                <td>GetFirst</td>
+                <td>This returns the first entity and can be filtered.</td>
+            </tr>
+
+            <tr>
+                <td>GetLast</td>
+                <td>This returns the last entity and can be filtered.</td>
+            </tr>
+
+            <tr>
+                <td>GetCountAsync</td>
+                <td>Number of entities – filterable; supporting Async</td>
+            </tr>
+
+            <tr>
+                <td>GetFirstAsync</td>
+                <td>
+                    This returns the first entity and can be filtered;
+                    supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetLastAsync</td>
+                <td>
+                    This returns the last entity and can be filtered; supporting
+                    Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetDtoById</td>
+                <td>Holding entity and mapping it in DTO format</td>
+            </tr>
+
+            <tr>
+                <td>GetByIdAsync</td>
+                <td>Holding entity with the primary key; supporting Async</td>
+            </tr>
+
+            <tr>
+                <td>GetDtoByIdAsync</td>
+                <td>
+                    Holding entity and mapping it in DTO format; supporting
+                    Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>ConvertTo</td>
+                <td>
+                    This converts a query result to another object based on
+                    configuration mapping
+                </td>
+            </tr>
+
+            <tr>
+                <td>ProjectTo</td>
+                <td>
+                    This projects a query result to another object based on
+                    configuration mapping
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="width:100%; height:500px">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/OhrX3/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                style="width:100%; height:400px"></iframe>
+    </div>
+</div>
+

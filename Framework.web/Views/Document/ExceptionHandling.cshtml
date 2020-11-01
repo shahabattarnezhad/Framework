@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "ExceptionHandling";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Exception Handling</h1>
+        <br />
+        <p>
+            One of the most important modules of the
+            <strong>AUA</strong> framework is its
+            <strong>error control module</strong>. This framework is perfect
+            at error control and management. <br />
+            For example: When a user enters one of the actions, an
+            expression occurs but the error page does not displayed and the
+            error text is displayed as a controlled message and the URL does
+            not change. Anywhere we want to interrupt request processing a
+            request, we can throw an Exception and interrupt the process, in
+            which case the error is sent to the error control module.
+        </p>
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/kSxpF/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            If the user is not logged in, the request processing should be
+            stopped and an error will be displayed.
+        </p>
+        <br />
+        <pre class="prettyprint lang-csh">
+                public IActionResult Index()
+                {
+
+                        if (CurrentUser is null)
+                        throw new ClientException("Custom Error Exception" );
+
+                } 
+ 
+                
+                public IActionResult Index()
+                {
+
+                        if (CurrentUser is null )
+                        throw new ClientException("Custom Error Exception");
+
+                }  
+              </pre>
+    </div>
+</div>
+

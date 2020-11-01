@@ -1,0 +1,221 @@
+﻿
+@{
+    ViewData["Title"] = "Reporting";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Reporting</h1>
+        <br />
+        <p>
+            One of the most important features of software is
+            <strong>Reporting</strong> with different capabilities and one
+            of the concerns of programmers is the
+            <strong>addition</strong> and <strong>modification</strong> of
+            filters which is performed in the <strong>AUA</strong> framework
+            easily and at a high speed and you can create your own report
+            with various filters. To create a report, we first make a view
+            model to apply filters and another view model to display the
+            <strong>output</strong> and finally write our
+            <strong>search filter</strong> to apply the filters.
+        </p>
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/RCufP/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            For example, we create a report of all users and all their
+            access. View Model of Search Filter..
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                    public class UserAccessReportSearchVm : BaseSearchVm
+                    {
+
+                            public string FirstName { get; set; }
+                            public string LastName { get; set; }
+                            public string UserName { get; set; }
+                            public bool ? IsActive { get; set; }
+
+                            public List< SelectListItem > RecordStatusItem { get; set; }
+
+                            public string RoleTitle { get; set; }
+                            public string UserAccessTitle { get; set; }
+
+                    }
+
+                  </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>View Model of Report output:</p>
+        <pre class="prettyprint lang-csh">
+                public class UserAccessReportGridVm : BaseEntityDto< long >, IHaveCustomMappings
+                {
+                        public string FirstName { get; set; }
+                        public string LastName { get; set; }
+                        public string UserName { get; set; }
+                        public string RoleTitle { get; set; }
+
+                        public string FullName => FirstName + " " + LastName;
+
+                        public string Password { get; set; }
+                        public string Phone { get; set; }
+                        public string Email { get; set; }
+                        public bool IsActive { get; set; }
+
+                        public ICollection< Role > UserRoles { get; set; }
+
+                        public IEnumerable< UserAccess > UserAccess { get; set; }
+
+                        public string UserRolesTitles => string.Join("<br /> " , UserRoles.Select(p => p.Title));
+
+                        public string UserAccessTitles => string.Join("<br /> " , UserAccess.Select(p => p.Title));
+
+                        public void ConfigureMapping(Profile configuration)
+                        {
+
+                            configuration.CreateMap< AppUser, UserAccessReportGridVm >()
+                                .ForMember(p => p.UserRoles, p => p.MapFrom(q => q.UserRoles.Select(r => r.Role)))
+                                .ForMember(p => p.UserAccess, p => p.MapFrom(q => q.UserRoles.SelectMany(t =>   t.Role.UserRoleAccess.Select(m => m.UserAccess))))
+                                .ReverseMap();
+
+                        }
+                }
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            After creating the search view and grid view of the model, we
+            write a search filter to apply the filters
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class UserAccessReportFilter : Specification< AppUser >
+                    {
+
+                        private readonly UserAccessReportSearchVm _searchVm;
+                        private Expression< Func< AppUser, bool > > _expression = p => true;
+                        protected bool IsEmptyFilter => _searchVm == null;
+
+                        public UserAccessReportFilter(UserAccessReportSearchVm searchVm)
+                        {
+
+                                _searchVm = searchVm;
+
+                        }
+
+                        public override Expression< Func< AppUser, bool > > IsSatisfiedBy()
+                        {
+
+                                if (IsEmptyFilter) return p => true;
+
+                                ApplyDefaultFilter();
+                                ApplyFirstNameFilter();
+                                ApplyLastNameFilter();
+                                ApplyUserNameFilter();
+                                ApplyIsActiveFilter();
+                                ApplyRoleTitleFilter();
+                                ApplyUserAccessTitleFilter();
+
+                                return _expression;
+
+                        }
+
+                       private void ApplyDefaultFilter()
+                       {
+                       }
+
+                        private void ApplyFirstNameFilter()
+                        {
+
+                                if (string.IsNullOrWhiteSpace(_searchVm.FirstName))
+
+                                    return;
+
+                                _expression = _expression.And(p => 
+
+                                                              p.FirstName.Contains(_searchVm.FirstName));
+
+                        }
+
+                       private void ApplyLastNameFilter()
+                       {
+
+                                if (string .IsNullOrWhiteSpace(_searchVm.LastName))
+
+                                    return;
+
+                                _expression = _expression.And(p => p.LastName.Contains(_searchVm.LastName));
+
+                        }
+
+                       private void ApplyUserNameFilter()
+                       {
+                                if (string .IsNullOrWhiteSpace(_searchVm.UserName))
+
+                                    return;
+
+                                _expression = _expression.And(p => p.UserName.Contains(_searchVm.UserName));
+                       }
+
+                       private void ApplyIsActiveFilter()
+                       {
+
+                                if (_searchVm.IsActive == null)
+
+                                    return;
+
+                                _expression = _expression.And(p => p.IsActive == _searchVm.IsActive);
+
+                       }
+
+                      private void ApplyRoleTitleFilter()
+                      {
+
+                                if (string .IsNullOrWhiteSpace(_searchVm.RoleTitle))
+
+                                    return;
+
+                                _expression = _expression.And(p => p.UserRoles.Any(r => r.Role.Title.Contains(_searchVm.RoleTitle)));
+
+                      }
+
+                      private void ApplyUserAccessTitleFilter()
+                      {
+                                if (string .IsNullOrWhiteSpace(_searchVm.UserAccessTitle))
+
+                                    return;
+
+                                _ expression = _expression.And(p => p.UserRoles.Any(r =>
+
+                                r.Role.UserRoleAccess.Any(a =>
+
+                                a.UserAccess.Title.Contains(_searchVm.UserAccessTitle))));
+
+                       }
+                }
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: 1">
+        <p>
+            Please note that you can always find more content in related
+            videos, which are placed in each item of documentation.
+        </p>
+    </div>
+</div>
+

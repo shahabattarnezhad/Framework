@@ -1,0 +1,343 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | aua framework</title>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=csh&amp;skin=sunburst"></script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link href="~/css/pagesStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Sidebar section starts-->
+
+    <div class="wrapper">
+        <div class="top_navbar">
+            <div class="logo">
+                <a>aua document</a>
+            </div>
+            <div class="top_menu">
+                <div class="home_link">
+                    <a asp-controller="Website" asp-action="Index">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span>back to home page</span>
+                    </a>
+                </div>
+                <div class="right_info"></div>
+            </div>
+        </div>
+
+        <div class="main_body">
+            <div class="sidebar_menu">
+                <div class="inner__sidebar_menu">
+                    <ul id="myNav">
+                        <li>
+                            @*<a asp-controller="Document" asp-action="Introduction" class="active">
+                                    <span class="icon"> <i class="fa fa-book"></i></span>
+                                    <span class="list">Introduction</span>
+                                </a>*@
+                            <a href="/Document/Introduction" class="active">
+                                <span class="icon"> <i class="fa fa-book"></i></span>
+                                <span id="introduction" class="list">Introduction</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="Naming">
+                                <span class="icon"> <i class="fa fa-i-cursor"></i></span>
+                                <span class="list">Naming Pattern</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="GeneralStructure">
+                                <span class="icon"> <i class="fa fa-folder-open"></i></span>
+                                <span class="list">Structure</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fa fa-archive"></i></span>
+                                <span class="list ent-btn">
+                                    Entity
+                                    <span class="fas fa-caret-down third"></span>
+                                </span>
+                            </a>
+                            <ul class="ent-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Add Entities</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Entity Configs</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Audit fields</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="Schema">
+                                        <span class="list">Schema</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fa fa-map-signs"></i></span>
+                                <span class="list mod-btn">
+                                    Models and Mapping
+                                    <span class="fas fa-caret-down fourth"></span>
+                                </span>
+                            </a>
+                            <ul class="mod-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Mapping</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">IMapFrom</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">IHaveCustomMappings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">ConvertTo</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="Schema">
+                                        <span class="list">ProjectTo</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fa fa-tasks"></i></span>
+                                <span class="list ser-btn">
+                                    Services
+                                    <span class="fas fa-caret-down fifth"></span>
+                                </span>
+                            </a>
+                            <ul class="ser-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Service Types</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Entity Service</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Validation Service</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">External Service</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">External Provider Service</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="InmemoryService">
+                                        <span class="list">InMemory Service</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Log Service</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fa fa-share-alt"></i></span>
+                                <span class="list acc-btn">
+                                    Access Levels
+                                    <span class="fas fa-caret-down sixth"></span>
+                                </span>
+                            </a>
+                            <ul class="acc-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">WebAuthorize</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">AllowLoggedInUser</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">OnlyLocalActionAuthorize</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">AllowAnonymousAuthorize</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="Schema">
+                                        <span class="list">OnlyHasAccessToken</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fas fa-chart-pie"></i></span>
+                                <span class="list ope-btn">
+                                    Reporting
+                                    <span class="fas fa-caret-down first"></span>
+                                </span>
+                            </a>
+                            <ul class="ope-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="Index">
+                                        <span class="list">Operational Report</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="Index">
+                                        <span class="list">Entreprice Report</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fa fa-database"></i></span>
+                                <span class="list sql-btn">
+                                    SQL Objects
+                                    <span class="fas fa-caret-down second"></span>
+                                </span>
+                            </a>
+                            <ul class="sql-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="StoredProcedure">
+                                        <span class="list">SQL Stored Procedure</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="Functions">
+                                        <span class="list">SQL Function</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="Views">
+                                        <span class="list">SQL View</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="">
+                                <span class="icon"><i class="fa fa-tags"></i></span>
+                                <span class="list">Exception Handling</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="icon"><i class="fa fa-cogs"></i></span>
+                                <span class="list app-btn">
+                                    AppSetting
+                                    <span class="fas fa-caret-down seventh"></span>
+                                </span>
+                            </a>
+                            <ul class="app-show">
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">Json Setting</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Document" asp-action="">
+                                        <span class="list">XML Setting</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="WebApi">
+                                <span class="icon"><i class="fa fa-cloud"></i></span>
+                                <span class="list">Web API</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="UI">
+                                <span class="icon"><i class="fa fa-paint-brush"></i></span>
+                                <span class="list"> UI and UX </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="MessageHandler">
+                                <span class="icon"><i class="fa fa-envelope"></i></span>
+                                <span class="list">Message Provider</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="GitRepository">
+                                <span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+                                <span class="list">Git Repository</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Document" asp-action="Versions">
+                                <span class="icon"><i class="fa fa-barcode"></i></span>
+                                <span class="list">Versions</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="hamburger">
+                        <div class="inner_hamburger">
+                            <span class="arrow">
+                                <i class="fas fa-long-arrow-alt-left"></i>
+                                <i class="fas fa-long-arrow-alt-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div id="showData">
+                    @RenderBody()
+                </div>
+                <br /><br />
+                <partial name="_footer" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar section ends -->
+    <!-- <script src="jquery.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/submenu.js"></script>
+    <script src="~/js/loadView.js"></script>
+</body>
+</html>
+

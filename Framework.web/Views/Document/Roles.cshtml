@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewData["Title"] = "Roles";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Roles</h1>
+        <br />
+        <p>
+            In the <strong>AUA</strong> framework, you as
+            <strong>administrator</strong> can control the users' access to
+            the smallest possible level. This is done by the
+            <strong>user management module</strong>. You can assign roles to
+            users by defining them and assigning
+            <strong>User Access</strong> levels to them. The diagram below
+            shows the levels of access to the <strong>AUA</strong> World
+            Framework.
+        </p>
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/M57At/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <h3>Levels of Access</h3>
+        <br />
+        <img style="width: 100%; height: 400px"
+             src="/images/diagram.jpg"
+             alt="diagram" />
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            There are four models of <strong>Authentication</strong> and <strong>Authorization</strong> in the
+            <strong>AUA</strong> framework and it is possible to specify the level of access
+            in the controller and action.
+        </p>
+        <br>
+        <p>
+            <ul>
+                <li>
+                    <strong>WebAuthorize</strong>: This attribute allows you to specify access levels for the action and controller.
+                </li>
+                <li>
+                    <strong>AllowLoggedInUser</strong>: The user has just to log in.
+                </li>
+                <li>
+                    <strong>OnlyLocalActionAuthorize</strong>: This attribute is for actions and controllers that only need to be called locally on the server.
+                </li>
+                <li>
+                    <strong>AllowAnonymousAuthorize</strong>: Any user can have unlimited access to this action and controller.
+                </li>
+            </ul>
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            To use <strong>WebAuthorize</strong>, you must add an item for each control
+            or action in <strong>UserAccess</strong>. In the database in the
+            <strong>UserAccess table</strong> we add the <strong>name</strong>,
+            <strong>access number</strong>, <strong>description</strong> and
+            <strong>URL</strong>.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+              public enum EUserAccess
+              {
+
+                      #region Accountin
+
+                      [ Description(" User Management ")]
+                      AppUser = 1,
+
+                      [ Description(" Access level management ")]
+                      UserAccess = 2,
+
+                      [ Description(" Role management ")]
+                      UserRole = 3,
+
+                      [ Description(" Role-level access management ")]
+                      UserRoleAccess = 4,
+                  
+                      #endregion
+
+              }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            To use <strong>WebAuthorize</strong>, you need to write it for the controller
+            or action.
+            For example, the following action is accessible only for users who have access
+            to <strong>AppUser = 1</strong>.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                [ WebAuthorize ( EUserAccess . AppUser )]
+                public async Task< IActionResult > _Insert(AppUserDto appUserDto)
+                {
+
+                        await _appUserService.InsertAsync(appUserDto);
+                        return RedirectToAction("Index");
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            <strong>WebAuthorize</strong> input can have several levels of access.
+            That is, the user has access to that resource if he has access to one of these.
+            The page title is loaded by default according to the description in
+            the UserAccess table for the page.
+        </p>
+    </div>
+</div>
+

@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "MessageProvider";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Message Handler</h1>
+        <br />
+        <p style="text-align:justify;">
+            The <strong>AUA</strong> framework contains two types of
+            <strong>Message Box</strong>, namely Html Messagebox and Dialog
+            Messagebox. If we use <strong>HtmlMessages</strong> in
+            <strong>View.csHtml</strong>, messages will be displayed in Html
+            in the right color, if we use <strong>DialogMessages</strong>,
+            they will be displayed in dialog, and if both models are loaded
+            in the view, they will be displayed as Html and dialog.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <h3>Adding Message Provider to View.csHtml</h3>
+        <br />
+        <pre class="prettyprint lang-csh">
+
+                < div class="form-group" >
+
+                        < partial name ="MessageProvider/HtmlMessages/_AllHtmlMessage" />
+
+                < /div >
+
+                @@ * OR  * @@
+
+                < div class="form-group">
+
+                        < partial name ="MessageProvider/DialogMessages/_AllDialogMessage" />
+
+                < /div >
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify";>
+            In the <strong>controller</strong>, we can easily send the
+            message to the view and display it.
+        </p>
+        <br />
+        <pre class="prettyprint lang-csh">
+
+                public IActionResult Index()
+                {
+
+                    NotifyMessage("** NotifyMessage **");
+
+                    SuccessMessage("** SuccessMessage **");
+
+                    ErrorMessage("** ErrorMessage **");
+
+                    WarningMessage( "** WarningMessage **" );
+
+                    Message( "** Message **");
+
+
+                    return View();
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="width:100%; height:500px">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/6saYl/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                style="width:100%; height:400px"></iframe>
+    </div>
+</div>
+

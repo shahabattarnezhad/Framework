@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewData["Title"] = "StoredProcedure";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Stored Procedure</h1>
+        <br />
+        <p style="text-align:justify;">
+            Most of the time, the programmer resorts to other ways like
+            <strong>Ado.net</strong> and <strong>Dapper</strong> to easily
+            work with the <strong>SQL Stored Procedure</strong> , not
+            knowing that he can simply manage the number of connections made
+            or create a separate context for it. SQL Stored Procedure is
+            called easily in the <strong>AUA</strong> Framework and has none
+            of the above problems.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            Example: Procedure call that gives the list of a user's access
+            in the <strong>AUA</strong> framework is as follows
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                    CREATE PROCEDURE [dbo].[uspGetUserRoles]
+
+                    @@ userId bigint
+
+                    AS
+
+                    SELECT ROLE.Id as RoleId,ROLE.Title,ROLE.Description
+
+                    FROM UserRole INNER JOIN ROLE
+
+                    ON UserRole.RoleId = ROLE.Id
+
+                    WHERE UserRole.AppUserId = @@ userId
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">We create a view model for the output of the procedure.</p>
+        <pre class="prettyprint lang-csh">
+
+                public class GetUserRolesSpResult
+                {
+
+                        public int RoleId { get; set; }
+                        public string Title { get; set; }
+                        public string Description { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            To call a procedure in <strong>StoredProcContext</strong> , we
+            add the following code.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+            public IQueryable< GetUserRolesSpResult > GetUserRolesSp(long userId)
+            {
+
+                    var cmd = LoadStoredProc(StoredProcedureConsts. GetUserRoles )
+                                    .WithSqlParam( "userId", userId);
+
+                              return cmd
+                                    .ExecutStoredProc< GetUserRolesSpResult >();
+
+            }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            To avoid the dispersal of the procedures' names, we place them
+            in the class in a fixed order.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class StoredProcedureConsts
+                {
+
+                        public const string GetAppUsersCount = "uspGetAppUsersCount" ;
+                        public const string GetUserRoles = "uspGetUserRoles";
+
+                } 
+  
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            The framework allows you to query the output of the procedure,
+            but this is not correct, as it should write its own procedure
+            for each task. The StoredProcService service, which includes all
+            procedures, allows you to call your own processor.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class StoredProcService : FuncBaseService, IStoredProcService
+                {
+
+                        public StoredProcService(IUnitOfWork unitOfWork) : base(unitOfWork)
+                        {}
+
+                        public IQueryable< GetUserRolesSpResult > GetUserRolesSp(long userId)
+                        {
+
+                            return UnitOfWork
+                                        .StoredProc
+                                        .GetUserRolesSp(userId);
+
+                        }
+
+                } 
+ 
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="width:100%; height:500px">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/VkPC6/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                style="width:100%; height:400px"></iframe>
+    </div>
+</div>
+

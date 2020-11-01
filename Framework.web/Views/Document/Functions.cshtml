@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "Functions";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Functions</h1>
+        <br />
+        <p style="text-align:justify">
+            One of the good features of the <strong>AUA</strong> framework
+            is that it works with functions in the
+            <strong>SQL Server</strong> to map their result to objects, and
+            to write a <strong>LINQ</strong> query on their results, which
+            can easily be done in <strong>AUA</strong> frameworks and it
+            avoids generating a dirty code for this task.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            For example: We call with the <strong>AUA</strong> framework a
+            function that takes the user code and returns its name.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                CREATE FUNCTION [dbo] .[GetUserName] (@@ userId BIGINT)
+
+                RETURNS NVARCHAR(200) AS
+
+                BEGIN
+
+                RETURN (SELECT UserName FROM AppUser WHERE Id = @@ userId)
+
+                END
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            In <strong>SqlFunctionContext</strong>, you can add a new
+            function call.
+        </p>
+        <pre class="prettyprint lang-csh">
+               public class SqlFunctionContext
+               {
+
+                            private readonly DbContext _dbContext; 
+   
+                            public SqlFunctionContext(DbContext dbContext)
+                            {
+
+                                    _dbContext = dbContext;
+
+                            }
+
+                
+                            public string GetUserName( long userId)
+                            {
+
+                                    var resultParameter = new SqlParameter("@@ result", SqlDbType.NVarChar, 200)
+                                    {
+
+                                        Direction = ParameterDirection.Output
+
+                                    };
+
+                                    ExecuteSqlCommand( $"SET @@ result =   dbo.GetUserName(' {userId}')",resultParameter);
+
+                                    return resultParameter.Value as string;
+
+                            }
+                
+                            private void ExecuteSqlCommand( string sqlCommand, IDbDataParameter resultParameter)
+                            {
+
+                                    _dbContext?
+                                            .Database?
+                                            .ExecuteSqlCommand(sqlCommand, resultParameter);
+
+                            }
+
+               }
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            In the <strong>SqlFunctionService</strong> service, the function
+            can be accessed and called.
+        </p>
+        <pre class="prettyprint lang-csh">
+                public class SqlFunctionService : FuncBaseService, ISqlFunctionService
+                {
+
+                        public SqlFunctionService(IUnitOfWork unitOfWork) : base(unitOfWork)
+                        {}
+
+                        public string GetUserName( long userId)
+                        {
+
+                        return UnitOfWork
+                                    .SqlFunction
+                                    .GetUserName(userId);
+
+                        } 
+        
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="width:100%; height:500px">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/uz2Mc/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                style="width:100%; height:400px"></iframe>
+    </div>
+</div>
+

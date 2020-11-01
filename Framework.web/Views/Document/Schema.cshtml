@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "Schema";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Schema</h1>
+        <br />
+        <p style="text-align:justify;">
+            One of the security issues in <strong>SQL Server</strong> is the
+            <strong>schema</strong> of tables. By default, the names of
+            tables are stored with the <strong>dbo</strong> prefix in the
+            <strong>SQL Server</strong>. It is easily possible to customize
+            this schema in the <strong>AUA</strong> framework.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p style="text-align:justify;">
+            To manage and prevent the dispersal of constants in the program,
+            we write them in the classes in a fixed order.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+               public class SchemaConsts
+               {  
+
+                      public const string Accounting = "Acc";  
+                      public const string School = "Sch";
+  
+               }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <pre class="prettyprint lang-csh">
+
+                [ Table ( "Student" , Schema = SchemaConsts . School )]
+                public class Student : DomainEntity
+                { 
+
+                        public string FirstName { get; set; }
+                        public string LastName { get; set; }
+                        public int Age { get; set; }
+
+                }
+
+                  </pre>
+        <p>Results of schema application in database</p>
+        <br />
+        <img src="/images/schema.jpg" alt="schema" />
+    </div>
+    @*<div class="item" style="flex: auto">
+
+    </div>*@
+</div>
+<div class="item_wrap">
+    <div class="item" style="width:100%; height:500px">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/BOmZr/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                style="width:100%; height:400px"></iframe>
+    </div>
+</div>
+

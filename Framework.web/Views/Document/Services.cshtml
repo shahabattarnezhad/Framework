@@ -1,0 +1,299 @@
+﻿
+@{
+    ViewData["Title"] = "Services";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Services</h1>
+        <br />
+        <p>
+            All businesses are implemented in the form of services and
+            created in the <strong>service</strong> layer. The service layer
+            uses the <strong>Service Infrastructure</strong> layer and
+            automatically connects to each service in its own Repository.
+            The advantage of this approach is that the developer is not
+            involved in the two concepts of repository and service and
+            focuses only on the service itself. The service has its own
+            built-in Repository, which is one of the most important features
+            of the <strong>AUA</strong> framework architecture. For example,
+            if we want to write a service for
+            <strong>Student</strong> Entity, we need to first create an
+            interface for Student Entity which inherits from the
+            <strong>IGenericEntityService</strong> class.
+        </p>
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/aWzEG/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+
+<div class="item_wrap">
+    <div class="item" style="flex: 2">
+        <h3>Services > EntitiesService</h3>
+        <br />
+        <p>
+            The first step about the entity that we have created before is
+            to make its service <br />
+            in <strong>Services</strong> layer.<br />
+            follow the instruction:
+        </p>
+        <br />
+        <img style="width: 500px; height: 300px"
+             src="/images/instructionOfEntitiesService.gif"
+             alt="instruction" />
+    </div>
+    <div class="item">
+        <p>
+            At the second step we need to create an
+            <strong>Interface</strong> in
+            <strong>Contracts</strong> directory.
+        </p>
+        <br />
+        <img style="width: 500px; height: 300px"
+             src="/images/adInterface.gif"
+             alt="addingInterface" />
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: 1">
+        <p>
+            At the third step we need to create a
+            <strong>Service</strong> in <strong>Services</strong> directory.
+            The service must inherit from the
+            <strong>GenericEntityService</strong> class and implement the
+            <strong>IStudentService</strong> interface built in the previous
+            step.
+        </p>
+        <br />
+        <img style="width: 500px; height: 300px"
+             src="/images/addService.gif"
+             alt="addingInterface" />
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <p>
+            By default, the service created contains all the functions
+            required to work with Repository. List of Repository functions
+            that are automatically added to each service..
+        </p>
+        <br />
+
+        <table>
+            <tr id="header">
+                <th>Function</th>
+                <th>Description</th>
+            </tr>
+
+            <tr>
+                <td>GetAll</td>
+                <td>
+                    This returns all entities and can be filtered. It also
+                    supports Async.
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetAllDto</td>
+                <td>
+                    This returns all entities in DTO format and can be filtered.
+                    It also supports Async.
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetCount</td>
+                <td>Number of entities - can be filtered.</td>
+            </tr>
+
+            <tr>
+                <td>GetFirst</td>
+                <td>This returns the first entity and can be filtered.</td>
+            </tr>
+
+            <tr>
+                <td>GetLast</td>
+                <td>This returns the last entity and can be filtered.</td>
+            </tr>
+
+            <tr>
+                <td>GetCountAsync</td>
+                <td>Number of entities – filterable; supporting Async</td>
+            </tr>
+
+            <tr>
+                <td>GetFirstAsync</td>
+                <td>
+                    This returns the first entity and can be filtered;
+                    supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetLastAsync</td>
+                <td>
+                    This returns the last entity and can be filtered; supporting
+                    Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>GetDtoById</td>
+                <td>Holding entity and mapping it in DTO format</td>
+            </tr>
+
+            <tr>
+                <td>GetByIdAsync</td>
+                <td>Holding entity with the primary key; supporting Async</td>
+            </tr>
+
+            <tr>
+                <td>GetDtoByIdAsync</td>
+                <td>
+                    Holding entity and mapping it in DTO format; supporting
+                    Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>Delete</td>
+                <td>Deleting entity with the primary key or DTO</td>
+            </tr>
+
+            <tr>
+                <td>DeleteAsync</td>
+                <td>
+                    Deleting entity with the primary key or DTO; supporting
+                    Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>Insert</td>
+                <td>Inserting new entity with Entity or DTO</td>
+            </tr>
+
+            <tr>
+                <td>InsertAsync</td>
+                <td>Inserting new entity; supporting Async</td>
+            </tr>
+
+            <tr>
+                <td>InsertMany</td>
+                <td>Inserting multiple entities simultaneously</td>
+            </tr>
+
+            <tr>
+                <td>InsertManyAsync</td>
+                <td>
+                    Inserting multiple entities simultaneously; supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>InsertCustomVm</td>
+                <td>
+                    Inserting entity with custom view model (when part of entity
+                    fields is sent from view)
+                </td>
+            </tr>
+
+            <tr>
+                <td>InsertCustomVmAsync</td>
+                <td>
+                    Inserting entity with custom view model ; supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>PartialInsert</td>
+                <td>
+                    Inserting entity into repository without sending to
+                    database; supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>Update</td>
+                <td>Editing new entity with Entity or DTO</td>
+            </tr>
+
+            <tr>
+                <td>UpdateAsync</td>
+                <td>
+                    Editing new entity with Entity or DTO ; supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>UpdateCustomVm</td>
+                <td>
+                    Editing entity with custom view model (when part of entity
+                    fields is sent from view)
+                </td>
+            </tr>
+
+            <tr>
+                <td>UpdateCustomVmAsync</td>
+                <td>
+                    Editing entity with custom view model (when part of entity
+                    fields is sent from view)
+                </td>
+            </tr>
+
+            <tr>
+                <td>PartialUpdate</td>
+                <td>
+                    Inserting entity into repository without sending to
+                    database; supporting Async
+                </td>
+            </tr>
+
+            <tr>
+                <td>ConvertTo</td>
+                <td>
+                    This converts a query result to another object based on
+                    configuration mapping
+                </td>
+            </tr>
+
+            <tr>
+                <td>ProjectTo</td>
+                <td>
+                    This projects a query result to another object based on
+                    configuration mapping
+                </td>
+            </tr>
+
+            <tr>
+                <td>SaveChange</td>
+                <td>
+                    This specifies the final status when using Partial
+                    Functions.
+                </td>
+            </tr>
+
+            <tr>
+                <td>SaveChangeAsync</td>
+                <td>
+                    This specifies the final status when using Partial
+                    Functions; supporting Async
+                </td>
+            </tr>
+        </table>
+        <br />
+        <p>
+            Implement the business into the services. One service can use
+            other services. You can easily inject services into another and
+            use it.
+        </p>
+    </div>
+</div>
+

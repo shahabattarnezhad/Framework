@@ -1,0 +1,42 @@
+﻿@model ContactUs
+
+<form method="post" asp-controller="Website" asp-action="Create">
+    <div class="fields">
+        <div class="field name">
+            <input type="text" asp-for="Name" placeholder="Name" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="field email">
+            <input type="email" asp-for="UserEmail" placeholder="Email" required />
+            <span asp-validation-for="UserEmail" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="field" id="userSubject">
+        <input type="text" asp-for="UserSubject" placeholder="Subject" required />
+        <span asp-validation-for="UserSubject" class="text-danger"></span>
+    </div>
+
+    <div class="field textarea">
+        <textarea required
+                  asp-for="UserDescription"
+                  cols="30"
+                  rows="10"
+                  placeholder="Describe project.."></textarea>
+        <span asp-validation-for="UserDescription" class="text-danger"></span>
+    </div>
+    @if (ViewBag.ConfirmMsg != null)
+    {
+        <div id="message" class="">
+            <h3 style="font-size:20px; color: green;">@ViewBag.ConfirmMSG</h3>
+        </div>
+    }
+    <div class="button">
+        <button type="submit">Send message</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

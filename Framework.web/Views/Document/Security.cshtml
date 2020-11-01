@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Security";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Security</h1>
+        <br />
+        <p>
+            One of the most important features of the <strong>AUA</strong> framework is its <strong>high security</strong>. <strong>Security</strong> and <strong>performance</strong> have always been in conflict. The <strong>Heilton</strong> security team has worked hard to design a very secure way to raise security while maintaining the performance and has used it in the <strong>AUA</strong> framework.
+            <br>
+            Each <strong>view model</strong> and <strong>DTO</strong> inherit from the generic class <strong>BaseEncryptionVm < TPrimaryKey ></TPrimaryKey></strong>, and two <strong>EncKeyId</strong> and <strong>DecKeyId</strong> fields are added to it.
+            <strong>EncKeyId</strong> is the encrypted equivalent of the primary key <strong>Id</strong>. The <strong>encryption key</strong> is generated for each different user. If the programmer specifies this field in its Select command, it will produce its framework; otherwise, it will not produce it.
+            <strong>DecKeyId</strong> is equivalent to <strong>Id</strong>.
+            In addition, the <strong>DecKeyId</strong> function has been considered in the <strong>BaseController</strong>. It receives <strong>EncKeyId</strong> and converts it to <strong>Id</strong>, and the programmer is not involved in encryption and hash algorithms under any circumstances (however, this feature can be avoided and that id may be used instead).
+        </p>
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/CxV1s/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <pre class="prettyprint lang-csh">
+
+            public async Task< IActionResult > _Update(string keyId)
+            { 
+    
+                    var userId = DecKeyId < long >(keyId);
+                    var model = await _appUserService.GetAppUserVmAsync(userId);
+
+                    return View(model); 
+     
+            }
+
+              </pre>
+    </div>
+</div>
+

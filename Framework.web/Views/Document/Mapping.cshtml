@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewData["Title"] = "Mapping";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Mapping</h1>
+        <br />
+        <p>
+            <strong>Models</strong> inherit the
+            <strong>BaseEntityDto</strong> class at <strong>AUA</strong>,
+            and the <strong>monitoring</strong> and
+            <strong>Id</strong> fields are added automatically to them. The
+            <strong>AUA</strong> framework has two mapping methods of
+            <strong>IMapFrom</strong> and
+            <strong>IHaveCustomMappings</strong> to map one object to
+            another. In the <strong>IMapFrom</strong> model, only fields
+            with the same name are mapped, and there is no mapping for those
+            with different names. This type of mapping is the simplest and
+            fastest type of mapping.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <h3>Watch the video part 1</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/9wd7O/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+    <div class="item" style="flex: auto;">
+        <h3>Watch the video part 2</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/srNiQ/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <p>
+            In the example below, a
+            <strong>Student</strong> entity is mapped to a
+            <strong>StudentDto</strong>, as follows:
+        </p>
+        <pre class="prettyprint lang-csh">
+            public class StudentDto : BaseEntityDto, IMapFrom< Student >
+                {
+
+                        [Display(Name = "First Name ")]
+                        public string FirstName { get; set; }
+
+                        [Display(Name = "Last Name")]
+                        public string LastName { get; set; }
+
+                        [Display(Name = "Age")]
+                        public int Age { get; set; }
+
+                        public string FullName => $"{FirstName} {LastName}";
+
+                }      
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <h3>IHaveCustomMappings Method</h3>
+        <br />
+        <p>
+            In the <strong>IHaveCustomMappings</strong> model, not only
+            fields with the same name, but also each field of the source
+            model can be mapped to the <strong>Linq</strong> commands. In
+            this case, your map includes configuration, which is performed
+            at the bottom of the model. This method is very flexible.
+            Anything that can be written with the Linq commands for an
+            entity can be written with this type of mapping. <br />
+            Below is a mapping example that maps an object from
+            <strong>AppUser</strong> to <strong>AppUserDto</strong>. In
+            addition, <strong>access levels</strong> and
+            <strong>roles</strong> are mapped. In the reporting section, we
+            will use complex mapping for reporting.
+        </p>
+        <pre class="prettyprint lang-csh">
+                public class AppUserDto: BaseEntityDto< long >, IHaveCustomMappings
+                {
+
+                        public string FirstName { get; set; }
+                        public string LastName { get; set; }
+                        public string UserName { get; set; }
+                        public string FullName => FirstName + " " + LastName;
+                        public string Password { get; set; }
+                        public string Phone { get; set; }
+                        public string Email { get; set; }
+                        public bool IsActive { get; set; }
+
+                        public virtual ICollection< UserRole > UserRoles { get; set; }
+
+                        public void ConfigureMapping(Profile configuration)
+                        {
+
+                          configuration.CreateMap< AppUser, AppUserDto >()
+                          .ForMember(p => p.UserRoles, p => p.MapFrom(q => q.UserRoles))
+                          .ReverseMap();
+
+                        }
+
+                }
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <h3>ConvertTo and ProjectTo Functions</h3>
+        <p>
+            To help with mapping operations, you can convert an object or
+            list of objects into one or a list of view models without any
+            restrictions, and use <strong>IMapFrom</strong> and
+            <strong>IHaveCustomMappings</strong> to configure mapping
+            operations (<strong>MapperInstance</strong> is by default an
+            instance of <strong>AutoMapper</strong> in all services). For
+            example, we have created a view model called
+            <strong>TestMappingVm</strong> that uses IHaveCustomMappings to
+            configure mapping operations, thereby mapping a query of the
+            AppUser entity to this view model using
+            <strong>ConvertTo</strong> and <strong>ProjectTo</strong>.
+        </p>
+        <pre class="prettyprint lang-csh">
+                public class TestMappingVm : IHaveCustomMappings
+                {
+
+                        public string Email { get; set; }
+                        public string PersonName { get; set; }
+                        public int RoleCount { get; set; }
+
+                        public ICollection< Role > UserRoles { get; set; }
+
+                        public void ConfigureMapping(Profile configuration)
+                        {
+
+                            configuration.CreateMap< AppUser, TestMappingVm >()
+                            .ForMember(p => p.PersonName, p => p.MapFrom(q => q.FirstName + " " + q.LastName))
+                            .ForMember(p => p.RoleCount, p => p.MapFrom(q => q.UserRoles.Count))
+                            .ForMember(p => p.UserRoles, p => p.MapFrom(q => q.UserRoles.Select(m => m.Role)))
+                            .ReverseMap();
+
+                        }
+
+                }
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <h3>Mapping using ProjectTo</h3>
+        <br />
+        <pre class="prettyprint lang-csh">
+                public IEnumerable<TestMappingVm> GeTestMappingVms()
+                {
+
+                        var query = GetAll().Where(p => p.IsActive);
+
+                        return MapperInstance
+                                .ProjectTo<TestMappingVm>(query) 
+                                .ToList();
+            
+                }
+              </pre>
+    </div>
+    <div class="item" style="flex: auto;">
+        <h3>Mapping using ConvertTo</h3>
+        <br />
+        <pre class="prettyprint lang-csh">
+                public IEnumerable<TestMappingVm> GeTestMappingVms()
+                {
+
+                        var query = GetAll().Where(p => p.IsActive);
+
+                        return query
+                                .ConvertTo<TestMappingVm>(MapperInstance)
+                                .ToList();
+
+                }
+              </pre>
+    </div>
+</div>
+

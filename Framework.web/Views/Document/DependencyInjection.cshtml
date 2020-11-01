@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewData["Title"] = "DependencyInjection";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Dependency Injection</h1>
+        <br />
+        After creating our services in previous step, now it is time to
+        use this service inside the controller, but before that it is
+        necessary to make it clear that how the injection would be done.
+        The way that <strong>aua</strong> framework has handled this step
+        is, all of the services are registered in
+        <strong>RegistrationServiceExtension</strong> in
+        <strong>WebApi > App_Start</strong> directory, then in
+        <strong>EntitiesService</strong>
+        function, it needs to inject the service here.
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/p5OKU/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: 1">
+        <h3>Injection the service</h3>
+        <br />
+        <img style="width: 700px; height: 300px"
+             src="/images/serviceInjection.gif"
+             alt="serviceInjection" />
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: 2">
+        <p>
+            In the next step it's time to work with the
+            <strong>Controller</strong>
+        </p>
+        <br />
+        <pre class="prettyprint lang-csh">
+              public class HomeController : Controller
+              {
+
+                        private readonly IStudentService _studentService;
+
+                        public HomeController(IStudentService studentService)
+                        {
+
+                            _studentService = studentService;
+
+                        }
+
+              }
+            </pre>
+    </div>
+    <div class="item" style="flex: 2">
+        <p>Now it's show time..</p>
+        <br />
+        <pre class="prettyprint lang-csh">
+                public IActionResult Index()
+                {
+
+                        _studentService.Insert(new Student
+                        {
+
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Age = 40
+
+                        });
+
+                        return View();
+
+                }
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: 2">
+        <p>
+            Instead of <strong>Student</strong> you can also use
+            <strong>StudentDto</strong>
+        </p>
+        <br />
+        <pre class="prettyprint lang-csh">
+                  public IActionResult Index()
+                  {
+
+                          _studentService.Insert(new StudentDto
+                          {
+
+                              FirstName = "John",
+                              LastName = "Smith",
+                              Age = 40
+
+                          });
+
+                          return View();
+
+                  }
+                </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: 1">
+        <p>
+            Please note that you can always find more content in related
+            videos, which are placed in each item of documentation.
+        </p>
+    </div>
+</div>
+

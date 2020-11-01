@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "GeneralStructure";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Structure</h1>
+        <br />
+        <p style="text-align:justify;">
+            Software projects require constant changes and updates. If the
+            structure develops in the wrong way, it will prevent changes and
+            extensions, and most of the time will lead to task duplication or
+            rewriting of the project from scratch. To get rid of the
+            complexity and task duplication that most programmers and
+            developers face, which is also caused by the inconsistency of code
+            at different levels of the program, we need a simple consistent
+            structure for writing software projects so that we can hide some
+            of the complexity and focus on business of the task. For example,
+            the Bootstrap framework is a very useful framework for Front End,
+            but few people would prefer to use frameworks like Bootstrap for
+            design, and write all of their design with CSS from the beginning.
+            For the Back End section, however, a simple, general-purpose
+            framework can save time and cost and produce high-quality code and
+            a uniform architecture. This framework allows developers to
+            develop their projects based on an appropriate integrated pattern.
+            The framework must be flexible enough to allow the programmer to
+            apply any changes needed, relying on its robust structure.
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <table>
+            <tr id="header">
+                <th>Layer's Name</th>
+                <th>Use</th>
+            </tr>
+
+            <tr>
+                <td>Common Layer</td>
+                <td>
+                    This layer contains common items used in other layers, such
+                    as <strong>Tools</strong> , <strong>Enums</strong>,
+                    <strong>Consts</strong>, <strong>Extensions</strong> and
+                    etc.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Data Layer</td>
+                <td>
+                    This layer contains items associated with the data source,
+                    including <strong>Entity Framework Context</strong>,
+                    <strong>Db Extensions</strong>,
+                    <strong>Search Filters</strong>,
+                    <strong>Unit of Work Patterns</strong>,
+                    <strong>Configuration Tools</strong> and
+                    <strong>Dapper Context</strong>.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Layer Domain Entity</td>
+                <td>
+                    This layer contains the <strong>entities</strong> and their
+                    <strong>configuration</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Layer Models</td>
+                <td>
+                    This layer contains <strong>DTOs</strong>,
+                    <strong>View Models</strong> and
+                    <strong>Config Mapping</strong>:  &nbsp; &nbsp;
+                    <strong>EntitiesDto</strong>, <strong>ReportModels</strong>,
+                    <strong>ViewModels</strong> and etc.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Service Infrastructure Layer</td>
+                <td>
+                    The overall infrastructure of <strong>Services</strong> and
+                    <strong>Repositories</strong> is written and becomes ready
+                    for use in this layer.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Service layer</td>
+                <td>
+                    This layer includes all the business services of your
+                    project, including
+                    <strong>BaseServices</strong>,
+                    <strong>BusinessService</strong>,
+                    <strong>EntitiesService</strong>,
+                    <strong>ReportService</strong> and etc.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Web Api or UI MVC Layer</td>
+                <td>
+                    This is an <strong>interface</strong> user layer that can be
+                    written with <strong>General MVC</strong>,
+                    <strong>WebApi</strong>, <strong>GraphQl</strong> and
+                    <strong>Grapc</strong>.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Test Layer</td>
+                <td>This layer is designed for writing unit tests. (ToDo)</td>
+            </tr>
+
+            <tr>
+                <td>External Web Service Layer</td>
+                <td>This layer is for calling external services. (ToDo)</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="width:100%; height:500px">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/DEi6L/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                style="width:100%; height:400px"></iframe>
+    </div>
+</div>
+

@@ -1,0 +1,279 @@
+﻿
+@{
+    ViewData["Title"] = "NewModule";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item">
+        <h1>Add New Module</h1>
+        <br />
+        Entity is the main concept, and indeed at the heart of the
+        architecture of, the <strong>AUA</strong> framework. Each entity is defined by a
+        class that contains its features and its relation to other
+        entities. Each entity has an identifier that can be of any Data
+        Type allowed in .NET, or it can be a combination of two or more
+        Data Types allowed therein (combination key).
+    </div>
+    <div class="item">
+        <h3>Watch the video</h3>
+        <br />
+        <iframe src="https://www.aparat.com/video/video/embed/videohash/u16na/vt/frame"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"></iframe>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <h3>Adding new module at aua structure</h3>
+        <br />
+        <img src="/images/newModule.gif" alt="general_structure" />
+    </div>
+    <div class="item">
+        <h3>Adding new entity at aua structure</h3>
+        <br />
+        <img src="/images/newEntity.gif" alt="general_structure" />
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <p>
+            Each entity inherits from the <strong>DomainEntity</strong> class, to which a
+            primary key field called <strong>Id</strong> and one or more monitoring fields
+            (depending on the setting type) are added.
+        </p>
+        <pre class="prettyprint lang-csh">
+                public class Student : DomainEntity
+                {
+                        public string FirstName { get; set; }
+                        public string LastName { get; set; }
+                        public int Ade { get; set; }
+                }
+              </pre>
+    </div>
+    <div class="item">
+        <p>
+            It should be specified if the primary key has a data type other
+            than the <strong>int</strong> data type (e.g. the <strong>Long</strong> data type is considered
+            under the primary key)
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class Student:DomainEntity< long >
+                {
+
+                        public string FirstName { get; set; }
+
+                        public string LastName { get; set; }
+
+                        public int Ade { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <p>
+            By default the following fields are added to each entity. The
+            <strong>Id</strong> key, the <strong>IsActive</strong> field and
+            the <strong>RegDate</strong>. <br />
+            The <strong>RegDate</strong> displays the
+            <strong>date and time</strong> the entity is created
+            (automatically created inside SQL Server) and does not need to
+            be filled in and sent.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class DomainEntity< TPrimaryKey > : BaseDomainEntity< TPrimaryKey >, IAuditInfo
+                {
+
+                        public DateTime RegDate { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item">
+        <p>
+            The <strong>Id</strong> key of the primary key and its data type
+            can be specified when defining an entity. The
+            <strong>IsActive</strong> field shows whether the entity is
+            active or inactive and it has a bool data type.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class BaseDomainEntity< TPrimaryKey > : IDomainEntity< TPrimaryKey >
+                {
+
+                        public TPrimaryKey Id { get; set; }
+                        public bool IsActive { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <p>
+            <h3>Monitoring fields</h3><br />You can add more
+            monitoring fields to the entities if you wish depending on your
+            business. <strong>Monitoring Field</strong> creating the
+            <strong>ICreationAudited</strong> Entity
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public interface ICreationAudited
+                {
+
+                        long CreatorUserId { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <p>
+            To add the monitoring field of <strong>CreatorUserId</strong>,
+            we can simply implement the
+            <strong>ICreationAudited</strong> interface for the
+            <strong>DomainEntity</strong>
+            class, as follows:
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class DomainEntity< TPrimaryKey > : BaseDomainEntity< TPrimaryKey >, IAuditInfo, ICreationAudited
+                {
+
+                        public DateTime RegDate { get; set; }
+                        public long CreatorUserId { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <h3>Auditing fields of deleting the IDeletionAudited entity</h3>
+        <br>
+        <p>
+            The <strong>IDeletionAudited</strong> interface can be used to
+            prevent the physical deletion and add the monitoring fields of
+            entity deletion.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public interface IDeletionAudited: ISoftDelete
+                {
+
+                        long? DeleterUserId { get; set; }
+                        DateTime? DeleteDate { get; set; }
+
+                }
+
+              </pre>
+        <pre class="prettyprint lang-csh">
+
+               public interface ISoftDelete
+               {
+
+                        bool IsDeleted { get; set; }
+
+               }
+
+              </pre>
+    </div>
+</div>
+
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <h3>Auditing fields for editing IModifiedAudited</h3>
+        <br>
+        <p>
+            The <strong>IModifiedAudited</strong> interface can be used to add monitoring fields for editing an entity.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public interface IModifiedAudited
+                {
+
+                        long? ModifierUserId { get; set; }
+                        DateTime? ModifyDate { get; set; }
+
+                }
+
+              </pre>
+    </div>
+</div>
+
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <h3>Configuration of entities</h3>
+        <br>
+        <p>
+            There is a configuration class for each entity that can specify the length of field settings for it.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class StudentConfig : IEntityTypeConfiguration< Student >
+                {
+                      public void Configure( EntityTypeBuilder< Student > builder)
+                      {
+
+                            builder
+                                  .Property(p => p.FirstName)
+                                  .HasMaxLength( LengthConsts.MaxStringLen50);
+
+                            builder
+                                  .Property(p => p.LastName)
+                                  .HasMaxLength( LengthConsts.MaxStringLen50);
+
+                      }
+                }
+
+              </pre>
+    </div>
+</div>
+
+<div class="item_wrap">
+    <div class="item" style="flex: auto;">
+        <p>
+            We configure the entity with the combination key as follows. The <strong>AppUserId</strong> and <strong>RoleId</strong> fields are both keys to the <strong>UserRole</strong> entity.
+        </p>
+        <pre class="prettyprint lang-csh">
+
+                public class UserRoleConfig : IEntityTypeConfiguration< UserRole >
+                {
+
+                  public void Configure(EntityTypeBuilder< UserRole > builder)
+                  {
+
+                         builder.
+                                Ignore(p => p.Id);
+
+                         builder.
+                                HasKey(p => new 
+                                              { 
+
+                                                p.AppUserId,
+                                                p.RoleId
+
+                                              });
+
+                  }
+
+               { 
+     
+              </pre>
+    </div>
+</div>
+

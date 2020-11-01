@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "Naming";
+    Layout = "~/Views/Shared/_LayoutDocument.cshtml";
+}
+
+<div class="item_wrap">
+    <div class="item" style="flex:auto;">
+        <h1>Naming Pattern</h1>
+        <br />
+        <p style="text-align:justify;">
+            One of the most important characteristics of a good framework is having a good <strong>naming pattern</strong>,
+            which all programmers must follow. We name all parts of the software, including <strong>folders</strong>,
+            <strong>files</strong>, <strong>classes</strong>, <strong>functions</strong>, <strong>variables</strong>, and
+            so on. You need to be so careful about naming a variable
+            that you care about naming a child (<strong>Uncle Bob Clean Code</strong>).
+            Naming should be such that each file is separated from the project and all programmers can specify
+            the exact address of the file from the file name. For the <strong>AUA</strong> framework, we suggest the following
+            naming pattern.
+
+            Every company or project should have a naming pattern for itself
+            To easily address all entities. <br/><br/>
+
+            The layer naming that <strong>AUA</strong> is representing is as follow: <br/>
+            <strong>Company Name</strong> + <strong>Project Name</strong> +  <strong>Layer Name</strong>
+        </p>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <h3>Adding Message Provider to View.csHtml</h3>
+        <br />
+        <pre class="prettyprint lang-csh">
+
+
+        </pre>
+    </div>
+</div>
+<div class="item_wrap">
+    <div class="item" style="flex: auto">
+        <p>
+            In the <strong>controller</strong>, we can easily send the
+            message to the view and display it.
+        </p>
+        <br />
+        <pre class="prettyprint lang-csh">
+
+                public IActionResult Index()
+                {
+
+                    NotifyMessage("** NotifyMessage **");
+
+                    SuccessMessage("** SuccessMessage **");
+
+                    ErrorMessage("** ErrorMessage **");
+
+                    WarningMessage( "** WarningMessage **" );
+
+                    Message( "** Message **");
+
+                    return View();
+
+                }
+
+              </pre>
+    </div>
+</div>
+
+
+
