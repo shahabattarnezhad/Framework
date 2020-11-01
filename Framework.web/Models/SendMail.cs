@@ -14,13 +14,13 @@ namespace Framework.web.Models
                 mailMessage.Subject = subject;
                 mailMessage.Body = "<h3>" + email + "</h3>"  + "<br/><br/>" + htmlMessage;
                 mailMessage.IsBodyHtml = true;
-                mailMessage.To.Add(new MailAddress("mybusinessemail038@gmail.com"));
+                mailMessage.To.Add(new MailAddress("enterThatEmailHere!"));
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
                 System.Net.NetworkCredential networkCredential = new System.Net.NetworkCredential();
-                networkCredential.UserName = "mybusinessemail038@gmail.com";
-                networkCredential.Password = "myPass4268";
+                networkCredential.UserName = "enterThatEmailHere!";
+                networkCredential.Password = "enterPassHere!";
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = networkCredential;
                 //smtp.Port = 587;
